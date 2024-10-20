@@ -26,7 +26,7 @@ def parse_args_and_config():
         "--config", type=str, required=True, help="Path to the config file"
     )
     parser.add_argument("--seed", type=int, default=2333, help="Random seed")
-    parser.add_argument("--taylor_batch_size", type=int, default=128, help="batch size for taylor expansion")
+    parser.add_argument("--taylor_batch_size", type=int, default=188, help="batch size for taylor expansion")
     parser.add_argument(
         "--exp", type=str, default="exp", help="Path for saving running related data."
     )

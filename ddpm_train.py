@@ -123,7 +123,7 @@ def parse_args():
         action="store_true",
         default=False,
     )
-    parser.add_argument("--num_iters", type=int, default=10000)
+    parser.add_argument("--num_iters", type=int, default=100)
     parser.add_argument(
         "--save_model_steps", type=int, default=1000, help="How often to save the model during training."
     )

@@ -16,7 +16,7 @@ from datasets import get_dataset, data_transform, inverse_data_transform
 from utils import UnlabeledImageFolder
 from accelerate import Accelerator
 torch.set_printoptions(sci_mode=False)
-
+import time 
 
 def parse_args_and_config(accelerator):
     parser = argparse.ArgumentParser(description=globals()["__doc__"])
@@ -264,7 +264,14 @@ def main():
         runner = Diffusion(args, config)
         runner.accelerator = accelerator
         if args.sample:
-            runner.sample()
+          # 开始计时
+          start_time = time.time()
+          runner.sample()
+          # 结束计时
+          end_time = time.time()
+          # 计算消耗的时间
+          time_taken = end_time - start_time
+          logging.info(f"Time taken to generate 64 image: {time_taken:.4f} seconds")
         elif args.test:
             runner.test()
         else:

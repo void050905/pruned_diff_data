@@ -256,6 +256,7 @@ def dict2namespace(config):
 def main():
     accelerator = Accelerator()
     args, config = parse_args_and_config(accelerator)
+    print(args)
     logging.info("Writing log file to {}".format(args.log_path))
     logging.info("Exp instance id = {}".format(os.getpid()))
     logging.info("Exp comment = {}".format(args.comment))

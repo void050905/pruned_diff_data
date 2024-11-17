@@ -62,6 +62,7 @@ class Diffusion(object):
     def __init__(self, args, config, device=None):
         self.args = args
         self.config = config
+        print(self.config)
         if device is None:
             device = (
                 torch.device("cuda")
@@ -100,6 +101,8 @@ class Diffusion(object):
     def build_model(self):
         args, config = self.args, self.config
         model = Model(config)
+        print(111)
+        print(args.restore_from)
         if args.load_pruned_model is not None:
             print("Loading pruned model from {}".format(args.load_pruned_model))
             states = torch.load(args.load_pruned_model, map_location='cpu')
@@ -147,6 +150,8 @@ class Diffusion(object):
         elif not self.args.use_pretrained:
             if getattr(self.config.sampling, "ckpt_id", None) is None:
                 ckpt = os.path.join(self.args.log_path, "ckpt.pth")
+                print(ckpt)
+                self.config.device = 'cuda'
                 states = torch.load(
                     ckpt,
                     map_location=self.config.device,
@@ -324,6 +329,7 @@ class Diffusion(object):
                 accelerator.wait_for_everyone()
                 if accelerator.is_main_process:
                     if step % self.config.training.snapshot_freq == 0 or step == 1:
+                        print(self.config.training.snapshot_freq)
                         unwrapped_model = accelerator.unwrap_model(model)
                         unwrapped_model.eval()
 

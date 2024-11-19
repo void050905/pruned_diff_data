@@ -6,7 +6,7 @@ python finetune_simple.py \
 --exp run/finetune_simple_v2/cifar10_ours_T=$1.pth \
 --doc post_training \
 --skip_type quad  \
---pruning_ratio 0.2 \
+--pruning_ratio 0.5 \
 --use_ema \
 --use_pretrained \
 --thr $1 \

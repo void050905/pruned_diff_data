@@ -406,11 +406,13 @@ class Diffusion(object):
         config = self.config
         img_id = len(glob.glob(f"{self.args.image_folder}/*"))
         print(f"starting from image {img_id}")
-        total_n_samples = 64
+        total_n_samples = 2560
         n_rounds = (total_n_samples - img_id) // config.sampling.batch_size
         
         #os.makedirs(os.path.join(self.args.image_folder, '{}'.format(accelerator.process_index)), exist_ok=True)
         with torch.no_grad():
+            start_time = time.time()
+        
             for _ in tqdm.tqdm(
                 range(n_rounds), desc="Generating image samples for FID evaluation."
             ):
@@ -431,6 +433,12 @@ class Diffusion(object):
                         x[i], os.path.join(self.args.image_folder, f"{img_id}.png")
                     )
                     img_id += 1
+            
+            # 结束计时
+            end_time = time.time()
+            # 计算消耗的时间
+            time_taken = end_time - start_time
+            logging.info(f"Time taken to generate 64 image: {time_taken:.4f} seconds")
 
     def sample_sequence(self, model):
         config = self.config
